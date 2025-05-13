@@ -8,10 +8,12 @@ export default function TransactionMenu() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState(null);
   const [formData, setFormData] = useState({
-    product: '',
+    service: '',
     customer: '',
     outlet: '',
     price: 0,
+    weight: 0,
+    date: new Date().toISOString().split('T')[0],
   });
 
   useEffect(() => {
@@ -22,9 +24,7 @@ export default function TransactionMenu() {
   }, []);
 
   useEffect(() => {
-      const storedTransactions = localStorage.getItem('transactions');
-
-      if (storedTransactions && transactions.length > 0) {
+      if (transactions.length !== 0) {
         localStorage.setItem('transactions', JSON.stringify(transactions));
       }
   }, [transactions]);
@@ -39,7 +39,7 @@ export default function TransactionMenu() {
   };
 
   const openAddModal = () => {
-    setFormData({ name: '', price: 0, outlet: '', customer: '', });
+    setFormData({ name: '', price: 0, outlet: '', customer: '', date: new Date().toISOString().split('T')[0], weight: 0 });
     setIsAddModalOpen(true);
   };
 
@@ -48,8 +48,10 @@ export default function TransactionMenu() {
     setFormData({
       name: transaction.name,
       price: transaction.price.toString(),
+      weight: transaction.weight.toString(),
       outlet: transaction.outlet,
       customer: transaction.customer,
+      date: transaction.date,
     });
     setIsEditModalOpen(true);
   };
@@ -67,7 +69,7 @@ export default function TransactionMenu() {
 
   const handleAddTransaction = () => {
     // Basic validation
-    if (!formData.outlet || !formData.customer || !formData.product) {
+    if (!formData.outlet || !formData.customer || !formData.service) {
       alert('Please fill in all fields');
       return;
     }
@@ -75,9 +77,11 @@ export default function TransactionMenu() {
     const newTransaction = {
       id: Date.now(),
       customer: formData.customer,
-      product: formData.product,
+      service: formData.service,
       outlet: formData.outlet,
       price: formData.price,
+      weight: formData.weight,
+      date: formData.date,
     };
 
     setTransactions([...transactions, newTransaction]);
@@ -86,7 +90,7 @@ export default function TransactionMenu() {
 
   const handleUpdateTransaction = () => {
     // Basic validation
-    if (!formData.name || !formData.price || !formData.outlet || !formData.customer) {
+    if (!formData.name || !formData.price || !formData.outlet || !formData.customer || !formData.date || !formData.weight) {
       alert('Please fill in all fields');
       return;
     }
@@ -97,8 +101,10 @@ export default function TransactionMenu() {
           ...transaction,
           name: formData.name,
           price: parseFloat(formData.price),
+          weight: parseFloat(formData.weight),
           outlet: formData.outlet,
-          customer: formData.customer
+          customer: formData.customer,
+          date: formData.date,
         };
       }
       return transaction;
@@ -141,7 +147,9 @@ export default function TransactionMenu() {
               <tr>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Customer</th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Price</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Product</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Weight</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Service</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Date</th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Outlet</th>
                 <th className="px-6 py-3 text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
               </tr>
@@ -151,7 +159,9 @@ export default function TransactionMenu() {
                 <tr key={transaction.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.customer}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp{transaction.price}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.product}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.weight}KG</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.service}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.date}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                       {transaction.outlet}
@@ -257,17 +267,17 @@ export default function TransactionMenu() {
 }
 
 const TransactionForm = ({ formData, handleChange }) => {
-  const [products, setProducts] = useState([]);
+  const [services, setServices] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [outlets, setOutlets] = useState([]);
 
   useEffect(() => {
-    const storedProducts = localStorage.getItem('products');
+    const storedServices = localStorage.getItem('services');
     const storedCustomers = localStorage.getItem('customers');
     const storedOutlets = localStorage.getItem('outlets');
 
-    if (storedProducts) {
-      setProducts(JSON.parse(storedProducts));
+    if (storedServices) {
+      setServices(JSON.parse(storedServices));
     }
     if (storedCustomers) {
       setCustomers(JSON.parse(storedCustomers));
@@ -319,21 +329,51 @@ const TransactionForm = ({ formData, handleChange }) => {
 
       <div className="mb-4">
         <label className="block text-gray-700 font-medium mb-2">
-          Product
+          service
         </label>
         <select
-          name="product"
-          value={formData.product}
+          name="service"
+          value={formData.service}
           onChange={handleChange}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         >
-          <option value="">Select product</option>
-          {products.map((product) => (
-            <option key={product.id} value={product.name}>
-              {product.name}
+          <option value="">Select service</option>
+          {services.map((service) => (
+            <option key={service.id} value={service.name}>
+              {service.name}
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2">
+          Date
+        </label>
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          placeholder="0.00"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2">
+          Berat (kg)
+        </label>
+        <input
+          type="number"
+          name="weight"
+          value={formData.weight}
+          onChange={handleChange}
+          min="0"
+          step="0.01"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          placeholder="0.00"
+        />
       </div>
 
       <div className="mb-4">

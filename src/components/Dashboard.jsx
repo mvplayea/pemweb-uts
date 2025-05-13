@@ -21,7 +21,7 @@ const Dashboard = () => {
     totalRevenue: 0,
     avgTransactionValue: 0,
     topOutlets: [],
-    topProducts: [],
+    topServices: [],
   })
   const [timeFilter, setTimeFilter] = useState("all") // all, month, week
 
@@ -72,7 +72,7 @@ const Dashboard = () => {
         totalRevenue: 0,
         avgTransactionValue: 0,
         topOutlets: [],
-        topProducts: [],
+        topServices: [],
       })
       return
     }
@@ -94,14 +94,14 @@ const Dashboard = () => {
       .slice(0, 5)
 
     // Calculate top products
-    const productCounts = transactionData.reduce((acc, transaction) => {
-      if (!acc[transaction.product]) acc[transaction.product] = 0
-      acc[transaction.product]++
+    const serviceCounts = transactionData.reduce((acc, transaction) => {
+      if (!acc[transaction.service]) acc[transaction.service] = 0
+      acc[transaction.service]++
       return acc
     }, {})
 
-    const topProducts = Object.entries(productCounts)
-      .map(([product, count]) => ({ product, count }))
+    const topServices = Object.entries(serviceCounts)
+      .map(([service, count]) => ({ service, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 5)
 
@@ -110,7 +110,7 @@ const Dashboard = () => {
       totalRevenue,
       avgTransactionValue,
       topOutlets,
-      topProducts,
+      topServices,
     })
   }
 
@@ -146,7 +146,7 @@ const Dashboard = () => {
           transactions: 0,
         }
       }
-      outletData[transaction.outlet].revenue += transaction.price
+      outletData[transaction.outlet].revenue += parseInt(transaction.price)
       outletData[transaction.outlet].transactions++
     })
 
@@ -213,17 +213,28 @@ const Dashboard = () => {
                 <h1 className="text-3xl font-semibold text-gray-800">Transactions Dashboard</h1>
                 <p className="mt-1 text-gray-600">Analytics overview of your transactions</p>
               </div>
-              <div className="mt-4 md:mt-0">
-                <select
-                  value={timeFilter}
-                  onChange={(e) => setTimeFilter(e.target.value)}
-                  className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="all">All Time</option>
-                  <option value="month">Last Month</option>
-                  <option value="week">Last Week</option>
-                </select>
-              </div>
+              {/* export to csv */}
+              {(localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "owner") && (
+                <div className="mt-4 md:mt-0">
+                  <button
+                    onClick={() => {
+                      const csvContent =
+                        "data:text/csv;charset=utf-8," +
+                        "Customer, Service, Outlet, Price\n" + 
+                        transactions.map((t) => `${t.customer},${t.service},${t.outlet},${t.price}`).join("\n")
+                      const encodedUri = encodeURI(csvContent)
+                      const link = document.createElement("a")
+                      link.setAttribute("href", encodedUri)
+                      link.setAttribute("download", "transactions.csv")
+                      document.body.appendChild(link)
+                      link.click()
+                    }}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                  >
+                    Export to CSV
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Stats Cards */}
@@ -305,7 +316,7 @@ const Dashboard = () => {
                         Customer
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Product
+                        Service
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Outlet
@@ -325,7 +336,7 @@ const Dashboard = () => {
                             <div className="font-medium text-gray-900">{transaction.customer}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-gray-500">{transaction.product}</div>
+                            <div className="text-gray-500">{transaction.service}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">

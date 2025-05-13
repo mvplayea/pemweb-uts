@@ -30,8 +30,8 @@ const Sidebar = ({ title = "Dashboard" }) => {
         onClick: () => navigate("/dashboard/transactions"),
       },
       {
-        text: "Products",
-        onClick: () => navigate("/dashboard/products"),
+        text: "Service",
+        onClick: () => navigate("/dashboard/services"),
       },
       {
         text: "Customers",
@@ -42,16 +42,23 @@ const Sidebar = ({ title = "Dashboard" }) => {
         onClick: () => navigate("/dashboard/outlets"),
       }
     );
-  } else if (role === "user") {
+  } else if (role === "kasir") {
     sidebarItems.push(
       {
         text: "Dashboard",
         onClick: () => navigate("/dashboard"),
       },
       {
-        text: "Profile",
-        onClick: () => navigate("/profile"),
+        text: "Transasctions",
+        onClick: () => navigate("/transactions"),
       }
+    );
+  } else if (role === "owner") {
+    sidebarItems.push(
+      {
+        text: "Dashboard",
+        onClick: () => navigate("/dashboard"),
+      },
     );
   }
 

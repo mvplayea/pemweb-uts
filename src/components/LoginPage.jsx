@@ -14,7 +14,20 @@ export default function LoginPage() {
     const password = formData.get("password");
 
     // Hardcode the role
-    const role = username === "admin" ? "admin" : "user";
+    let role;
+
+    switch (username) {
+      case "admin":
+        role = "admin";
+        break;
+      case "kasir":
+        role = "kasir";
+        break;
+      case "owner":
+        role = "owner";
+        break;
+    }
+
 
     // Store data in localStorage
     localStorage.setItem("username", username);

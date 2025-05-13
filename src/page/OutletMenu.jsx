@@ -10,7 +10,7 @@ export default function OutletMenu() {
   const [currentOutlet, setCurrentOutlet] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
-    category: ''
+    address: '',
   });
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function OutletMenu() {
   };
 
   const openAddModal = () => {
-    setFormData({ name: '', category: '' });
+    setFormData({ name: '', address: '' });
     setIsAddModalOpen(true);
   };
 
@@ -43,7 +43,7 @@ export default function OutletMenu() {
     setCurrentOutlet(outlet);
     setFormData({
       name: outlet.name,
-      category: outlet.category
+      address: outlet.address
     });
     setIsEditModalOpen(true);
   };
@@ -61,7 +61,7 @@ export default function OutletMenu() {
 
   const handleAddOutlet = () => {
     // Basic validation
-    if (!formData.name || !formData.category) {
+    if (!formData.name || !formData.address) {
       alert('Please fill in all fields');
       return;
     }
@@ -69,7 +69,7 @@ export default function OutletMenu() {
     const newOutlet = {
       id: Date.now(),
       name: formData.name,
-      category: formData.category
+      address: formData.address
     };
 
     setOutlets([...outlets, newOutlet]);
@@ -78,7 +78,7 @@ export default function OutletMenu() {
 
   const handleUpdateOutlet = () => {
     // Basic validation
-    if (!formData.name || !formData.category) {
+    if (!formData.name || !formData.address) {
       alert('Please fill in all fields');
       return;
     }
@@ -88,7 +88,7 @@ export default function OutletMenu() {
         return {
           ...outlet,
           name: formData.name,
-          category: formData.category
+          address: formData.address
         };
       }
       return outlet;
@@ -129,7 +129,7 @@ export default function OutletMenu() {
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Category</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Address</th>
                 <th className="px-6 py-3 text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -139,7 +139,7 @@ export default function OutletMenu() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{outlet.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                      {outlet.category}
+                      {outlet.address}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -259,21 +259,16 @@ const OutletForm = ({ formData, handleChange }) => (
 
     <div className="mb-4">
       <label className="block text-gray-700 font-medium mb-2">
-        Category
+        Address
       </label>
-      <select
-        name="category"
-        value={formData.category}
+      <input
+        type="text"
+        name="address"
+        value={formData.address}
         onChange={handleChange}
         className="w-full px-3 py-2 border border-gray-300 rounded-md"
-      >
-        <option value="">Select category</option>
-        <option value="electronics">Electronics</option>
-        <option value="clothing">Clothing</option>
-        <option value="books">Books</option>
-        <option value="food">Food</option>
-        <option value="other">Other</option>
-      </select>
+        placeholder="Enter outlet name"
+      />
     </div>
   </div>
 );
