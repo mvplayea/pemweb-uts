@@ -1,7 +1,15 @@
 import { useState } from "react"
+import { useNavigate } from "react-router"
 
 const Sidebar = ({ items = [], title = "Dashboard" }) => {
   const [collapsed, setCollapsed] = useState(false)
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // remove from local storage
+    localStorage.removeItem("username");
+    navigate("/");
+  }
 
   return (
     <div className={`h-screen bg-gray-800 text-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}>
@@ -24,6 +32,12 @@ const Sidebar = ({ items = [], title = "Dashboard" }) => {
           />
         ))}
       </div>
+      <button 
+      onClick={handleLogout}
+      className="absolute bottom-4 left-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Logout
+      </button>
     </div>
   )
 }
