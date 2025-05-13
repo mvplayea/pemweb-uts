@@ -10,7 +10,7 @@ export default function ProductMenu() {
   const [formData, setFormData] = useState({
     name: '',
     price: '',
-    category: ''
+    category: '',
   });
 
   // Load products from localStorage on component mount
@@ -22,12 +22,13 @@ export default function ProductMenu() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('products', JSON.stringify(products));
+    if(products.length > 0) {
+      localStorage.setItem('products', JSON.stringify(products));
+    }
   }, [products]);
 
   // Save products to localStorage whenever the products state changes
   const handleChange = (e) => {
-    e.stopPropagation();
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -106,6 +107,7 @@ export default function ProductMenu() {
     const updatedProducts = products.filter(
       product => product.id !== currentProduct.id
     );
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
     setProducts(updatedProducts);
     closeModals();
   };
@@ -142,13 +144,13 @@ export default function ProductMenu() {
               {products.map((product) => (
                 <tr key={product.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.price.toFixed(2)}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp{product.price}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                       {product.category}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="flex justify-center items-center px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex space-x-2">
                       <button
                         onClick={() => openEditModal(product)}
@@ -265,7 +267,7 @@ const ProductForm = ({ formData, handleChange }) => (
 
     <div className="mb-4">
       <label className="block text-gray-700 font-medium mb-2">
-        Price ($)
+        Price (Rp)
       </label>
       <input
         type="number"
@@ -290,11 +292,8 @@ const ProductForm = ({ formData, handleChange }) => (
         className="w-full px-3 py-2 border border-gray-300 rounded-md"
       >
         <option value="">Select category</option>
-        <option value="electronics">Electronics</option>
-        <option value="clothing">Clothing</option>
-        <option value="books">Books</option>
-        <option value="food">Food</option>
-        <option value="other">Other</option>
+        <option value="Express">Express</option>
+        <option value="Regular">Regular</option>
       </select>
     </div>
   </div>

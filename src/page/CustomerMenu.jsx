@@ -9,8 +9,7 @@ export default function CustomerTable() {
   const [currentCustomer, setCurrentCustomer] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
-    price: '',
-    category: ''
+    phone: '',
   });
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function CustomerTable() {
   };
 
   const openAddModal = () => {
-    setFormData({ name: '', price: '', category: '' });
+    setFormData({ name: '', phone: '', });
     setIsAddModalOpen(true);
   };
 
@@ -43,8 +42,7 @@ export default function CustomerTable() {
     setCurrentCustomer(customer);
     setFormData({
       name: customer.name,
-      price: customer.price.toString(),
-      category: customer.category
+      phone: customer.phone.toString(),
     });
     setIsEditModalOpen(true);
   };
@@ -62,7 +60,7 @@ export default function CustomerTable() {
 
   const handleAddCustomer = () => {
     // Basic validation
-    if (!formData.name || !formData.price || !formData.category) {
+    if (!formData.name || !formData.phone) {
       alert('Please fill in all fields');
       return;
     }
@@ -70,8 +68,7 @@ export default function CustomerTable() {
     const newCustomer = {
       id: Date.now(),
       name: formData.name,
-      price: parseFloat(formData.price),
-      category: formData.category
+      phone: formData.phone,
     };
 
     setCustomers([...customers, newCustomer]);
@@ -80,7 +77,7 @@ export default function CustomerTable() {
 
   const handleUpdateCustomer = () => {
     // Basic validation
-    if (!formData.name || !formData.price || !formData.category) {
+    if (!formData.name || !formData.phone ) {
       alert('Please fill in all fields');
       return;
     }
@@ -90,8 +87,7 @@ export default function CustomerTable() {
         return {
           ...customer,
           name: formData.name,
-          price: parseFloat(formData.price),
-          category: formData.category
+          phone: formData.phone,
         };
       }
       return customer;
@@ -105,6 +101,7 @@ export default function CustomerTable() {
     const updatedCustomers = customers.filter(
       customer => customer.id !== currentCustomer.id
     );
+    localStorage.setItem('customers', JSON.stringify(updatedCustomers));
     setCustomers(updatedCustomers);
     closeModals();
   };
@@ -131,8 +128,7 @@ export default function CustomerTable() {
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Price</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Category</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">phone</th>
                 <th className="px-6 py-3 text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -140,13 +136,8 @@ export default function CustomerTable() {
               {customers.map((customer) => (
                 <tr key={customer.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{customer.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${customer.price.toFixed(2)}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                      {customer.category}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.phone}</td>
+                  <td className="flex justify-center items-center px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex space-x-2">
                       <button
                         onClick={() => openEditModal(customer)}
@@ -263,37 +254,16 @@ export default function CustomerTable() {
       
       <div className="mb-4">
         <label className="block text-gray-700 font-medium mb-2">
-          Price ($)
+          Phone
         </label>
         <input
-          type="number"
-          name="price"
-          value={formData.price}
+          type="text"
+          name="phone"
+          value={formData.phone}
           onChange={handleChange}
-          min="0"
-          step="0.01"
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          placeholder="0.00"
+          placeholder="000-000-0000"
         />
-      </div>
-      
-      <div className="mb-4">
-        <label className="block text-gray-700 font-medium mb-2">
-          Category
-        </label>
-        <select
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        >
-          <option value="">Select category</option>
-          <option value="electronics">Electronics</option>
-          <option value="clothing">Clothing</option>
-          <option value="books">Books</option>
-          <option value="food">Food</option>
-          <option value="other">Other</option>
-        </select>
       </div>
     </div>
   );

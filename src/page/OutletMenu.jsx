@@ -10,7 +10,6 @@ export default function OutletMenu() {
   const [currentOutlet, setCurrentOutlet] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
-    price: '',
     category: ''
   });
 
@@ -36,7 +35,7 @@ export default function OutletMenu() {
   };
 
   const openAddModal = () => {
-    setFormData({ name: '', price: '', category: '' });
+    setFormData({ name: '', category: '' });
     setIsAddModalOpen(true);
   };
 
@@ -44,7 +43,6 @@ export default function OutletMenu() {
     setCurrentOutlet(outlet);
     setFormData({
       name: outlet.name,
-      price: outlet.price.toString(),
       category: outlet.category
     });
     setIsEditModalOpen(true);
@@ -63,7 +61,7 @@ export default function OutletMenu() {
 
   const handleAddOutlet = () => {
     // Basic validation
-    if (!formData.name || !formData.price || !formData.category) {
+    if (!formData.name || !formData.category) {
       alert('Please fill in all fields');
       return;
     }
@@ -71,7 +69,6 @@ export default function OutletMenu() {
     const newOutlet = {
       id: Date.now(),
       name: formData.name,
-      price: parseFloat(formData.price),
       category: formData.category
     };
 
@@ -81,7 +78,7 @@ export default function OutletMenu() {
 
   const handleUpdateOutlet = () => {
     // Basic validation
-    if (!formData.name || !formData.price || !formData.category) {
+    if (!formData.name || !formData.category) {
       alert('Please fill in all fields');
       return;
     }
@@ -91,7 +88,6 @@ export default function OutletMenu() {
         return {
           ...outlet,
           name: formData.name,
-          price: parseFloat(formData.price),
           category: formData.category
         };
       }
@@ -106,6 +102,7 @@ export default function OutletMenu() {
     const updatedOutlets = outlets.filter(
       outlet => outlet.id !== currentOutlet.id
     );
+    localStorage.setItem('outlets', JSON.stringify(updatedOutlets));
     setOutlets(updatedOutlets);
     closeModals();
   };
@@ -132,7 +129,6 @@ export default function OutletMenu() {
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Price</th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Category</th>
                 <th className="px-6 py-3 text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
               </tr>
@@ -141,7 +137,6 @@ export default function OutletMenu() {
               {outlets.map((outlet) => (
                 <tr key={outlet.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{outlet.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${outlet.price.toFixed(2)}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                       {outlet.category}
@@ -259,22 +254,6 @@ const OutletForm = ({ formData, handleChange }) => (
         onChange={handleChange}
         className="w-full px-3 py-2 border border-gray-300 rounded-md"
         placeholder="Enter outlet name"
-      />
-    </div>
-
-    <div className="mb-4">
-      <label className="block text-gray-700 font-medium mb-2">
-        Price ($)
-      </label>
-      <input
-        type="number"
-        name="price"
-        value={formData.price}
-        onChange={handleChange}
-        min="0"
-        step="0.01"
-        className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        placeholder="0.00"
       />
     </div>
 

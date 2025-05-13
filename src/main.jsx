@@ -8,17 +8,20 @@ import LoginPage from './components/LoginPage.jsx'
 import ProductMenu from './page/ProductMenu.jsx'
 import CustomerMenu from './page/CustomerMenu.jsx'
 import OutletMenu from './page/OutletMenu.jsx'
+import Sidebar from './components/Sidebar.jsx'
+import TransactionMenu from './page/TransactionMenu.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/dashboard">
+        <Route path="/dashboard" element={<Sidebar />}>
           <Route index element={<Dashboard />} />
-          <Route path="product" element={<ProductMenu /> } />
-          <Route path="outlet" element={<OutletMenu /> } />
-          <Route path="customer" element={<CustomerMenu /> } />
+          <Route path="products" element={<ProductMenu /> } />
+          <Route path="transactions" element={<TransactionMenu /> } />
+          <Route path="outlets" element={<OutletMenu /> } />
+          <Route path="customers" element={<CustomerMenu /> } />
         </Route>
       </Routes>
     </BrowserRouter>
