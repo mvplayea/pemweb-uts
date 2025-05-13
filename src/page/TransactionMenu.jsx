@@ -10,6 +10,7 @@ export default function TransactionMenu() {
   const [formData, setFormData] = useState({
     service: '',
     customer: '',
+    user: '',
     outlet: '',
     price: 0,
     weight: 0,
@@ -24,9 +25,9 @@ export default function TransactionMenu() {
   }, []);
 
   useEffect(() => {
-      if (transactions.length !== 0) {
-        localStorage.setItem('transactions', JSON.stringify(transactions));
-      }
+    if (transactions.length !== 0) {
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+    }
   }, [transactions]);
 
   const handleChange = (e) => {
@@ -82,6 +83,7 @@ export default function TransactionMenu() {
       price: formData.price,
       weight: formData.weight,
       date: formData.date,
+      user: localStorage.getItem('username'),
     };
 
     setTransactions([...transactions, newTransaction]);
@@ -90,7 +92,8 @@ export default function TransactionMenu() {
 
   const handleUpdateTransaction = () => {
     // Basic validation
-    if (!formData.name || !formData.price || !formData.outlet || !formData.customer || !formData.date || !formData.weight) {
+    console.log(formData);
+    if (!formData.price || !formData.outlet || !formData.customer || !formData.date || !formData.weight) {
       alert('Please fill in all fields');
       return;
     }
@@ -99,12 +102,12 @@ export default function TransactionMenu() {
       if (transaction.id === currentTransaction.id) {
         return {
           ...transaction,
-          name: formData.name,
           price: parseFloat(formData.price),
           weight: parseFloat(formData.weight),
           outlet: formData.outlet,
           customer: formData.customer,
           date: formData.date,
+          user: localStorage.getItem('username'),
         };
       }
       return transaction;
@@ -130,7 +133,7 @@ export default function TransactionMenu() {
         <h1 className="text-2xl font-bold text-gray-800">Transaction Management</h1>
         <button
           onClick={openAddModal}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-blue-900"
         >
           Add New Transaction
         </button>
@@ -145,25 +148,32 @@ export default function TransactionMenu() {
           <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Customer</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Price</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Weight</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Service</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Outlet</th>
-                <th className="px-6 py-3 text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">User</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Weight</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Service</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Outlet</th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {transactions.map((transaction) => (
                 <tr key={transaction.id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.user}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.customer}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp{transaction.price}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(transaction.price)}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.weight}KG</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.service}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.date}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary-100 text-blue-800">
                       {transaction.outlet}
                     </span>
                   </td>
@@ -171,13 +181,13 @@ export default function TransactionMenu() {
                     <div className="flex space-x-2">
                       <button
                         onClick={() => openEditModal(transaction)}
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-indigo-500 hover:text-indigo-900"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => openDeleteModal(transaction)}
-                        className="text-red-600 hover:text-red-900"
+                        className="text-red-500 hover:text-red-900"
                       >
                         Delete
                       </button>
@@ -206,7 +216,7 @@ export default function TransactionMenu() {
           </button>
           <button
             onClick={handleAddTransaction}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-900"
           >
             Add Transaction
           </button>
@@ -229,7 +239,7 @@ export default function TransactionMenu() {
           </button>
           <button
             onClick={handleUpdateTransaction}
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900"
           >
             Update Transaction
           </button>
@@ -243,7 +253,7 @@ export default function TransactionMenu() {
         onClose={closeModals}
       >
         <div className="p-4">
-          <p className="text-gray-700">
+          <p className="text-gray-900">
             Are you sure you want to delete "{currentTransaction?.name}"? This action cannot be undone.
           </p>
         </div>
@@ -256,7 +266,7 @@ export default function TransactionMenu() {
           </button>
           <button
             onClick={handleDeleteTransaction}
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-900"
           >
             Delete
           </button>
@@ -268,19 +278,14 @@ export default function TransactionMenu() {
 
 const TransactionForm = ({ formData, handleChange }) => {
   const [services, setServices] = useState([]);
-  const [customers, setCustomers] = useState([]);
   const [outlets, setOutlets] = useState([]);
 
   useEffect(() => {
     const storedServices = localStorage.getItem('services');
-    const storedCustomers = localStorage.getItem('customers');
     const storedOutlets = localStorage.getItem('outlets');
 
     if (storedServices) {
       setServices(JSON.parse(storedServices));
-    }
-    if (storedCustomers) {
-      setCustomers(JSON.parse(storedCustomers));
     }
     if (storedOutlets) {
       setOutlets(JSON.parse(storedOutlets));
@@ -290,7 +295,7 @@ const TransactionForm = ({ formData, handleChange }) => {
   return (
     <div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-medium mb-2">
+        <label className="block text-gray-900 font-medium mb-2">
           Outlet
         </label>
         <select
@@ -309,27 +314,22 @@ const TransactionForm = ({ formData, handleChange }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700 font-medium mb-2">
+        <label className="block text-gray-900 font-medium mb-2">
           Customer
         </label>
-        <select
+        <input
+          type="text"
           name="customer"
           value={formData.customer}
           onChange={handleChange}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        >
-          <option value="">Select customer</option>
-          {customers.map((customer) => (
-            <option key={customer.id} value={customer.name}>
-              {customer.name}
-            </option>
-          ))}
-        </select>
+          placeholder="Enter customer name"
+        />
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700 font-medium mb-2">
-          service
+        <label className="block text-gray-900 font-medium mb-2">
+          Service
         </label>
         <select
           name="service"
@@ -347,7 +347,7 @@ const TransactionForm = ({ formData, handleChange }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700 font-medium mb-2">
+        <label className="block text-gray-900 font-medium mb-2">
           Date
         </label>
         <input
@@ -361,7 +361,7 @@ const TransactionForm = ({ formData, handleChange }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700 font-medium mb-2">
+        <label className="block text-gray-900 font-medium mb-2">
           Berat (kg)
         </label>
         <input
@@ -377,7 +377,7 @@ const TransactionForm = ({ formData, handleChange }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700 font-medium mb-2">
+        <label className="block text-gray-900 font-medium mb-2">
           Price (Rp)
         </label>
         <input

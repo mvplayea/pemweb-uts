@@ -196,7 +196,7 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-        <div className="text-blue-500">{icon}</div>
+        <div className="text-primary-500">{icon}</div>
       </div>
     </div>
   )
@@ -229,7 +229,7 @@ const Dashboard = () => {
                       document.body.appendChild(link)
                       link.click()
                     }}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                    className="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-500"
                   >
                     Export to CSV
                   </button>
@@ -339,7 +339,7 @@ const Dashboard = () => {
                             <div className="text-gray-500">{transaction.service}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary-100 text-primary-900">
                               {transaction.outlet}
                             </span>
                           </td>

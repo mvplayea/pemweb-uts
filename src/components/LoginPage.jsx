@@ -46,8 +46,9 @@ export default function LoginPage() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-primary-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-80">
+        <img src="/wowo.png" alt="Logo" className="w-48 mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -59,7 +60,7 @@ export default function LoginPage() {
               id="username"
               name="username"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
             />
           </div>
           <div className="mb-6">
@@ -71,19 +72,19 @@ export default function LoginPage() {
               id="password"
               name="password"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+            className="w-full bg-primary-900 hover:bg-primary-500 hover:text-primary-900 text-primary-500 font-medium py-2 px-4 rounded-md transition duration-300"
           >
             Login
           </button>
           <div className="text-center text-sm mt-4">
-            <a href="#" className="text-blue-500 hover:underline">Forgot Password?</a>
+            <a href="#" className="text-primary-500 hover:underline">Forgot Password?</a>
             <span className="mx-2 text-gray-500">|</span>
-            <a href="#" className="text-blue-500 hover:underline">Register</a>
+            <a href="#" className="text-primary-500 hover:underline">Register</a>
           </div>
         </form>
       </div>

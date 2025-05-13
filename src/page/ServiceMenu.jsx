@@ -116,7 +116,7 @@ export default function ServiceMenu() {
         <h1 className="text-2xl font-bold text-gray-800">Service Management</h1>
         <button
           onClick={openAddModal}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-blue-900"
         >
           Add New Service
         </button>
@@ -131,9 +131,9 @@ export default function ServiceMenu() {
           <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Category</th>
-                <th className="px-6 py-3 text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -141,7 +141,7 @@ export default function ServiceMenu() {
                 <tr key={service.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{service.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary-100 text-blue-800">
                       {service.category}
                     </span>
                   </td>
@@ -149,13 +149,13 @@ export default function ServiceMenu() {
                     <div className="flex space-x-2">
                       <button
                         onClick={() => openEditModal(service)}
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-indigo-500 hover:text-indigo-900"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => openDeleteModal(service)}
-                        className="text-red-600 hover:text-red-900"
+                        className="text-red-500 hover:text-red-900"
                       >
                         Delete
                       </button>
@@ -184,7 +184,7 @@ export default function ServiceMenu() {
           </button>
           <button
             onClick={handleAddService}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-blue-900"
           >
             Add Service
           </button>
@@ -207,7 +207,7 @@ export default function ServiceMenu() {
           </button>
           <button
             onClick={handleUpdateService}
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900"
           >
             Update Service
           </button>
@@ -221,7 +221,7 @@ export default function ServiceMenu() {
         onClose={closeModals}
       >
         <div className="p-4">
-          <p className="text-gray-700">
+          <p className="text-gray-900">
             Are you sure you want to delete "{currentService?.name}"? This action cannot be undone.
           </p>
         </div>
@@ -234,7 +234,7 @@ export default function ServiceMenu() {
           </button>
           <button
             onClick={handleDeleteService}
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-900"
           >
             Delete
           </button>
@@ -247,7 +247,7 @@ export default function ServiceMenu() {
 const ServiceForm = ({ formData, handleChange }) => (
   <div>
     <div className="mb-4">
-      <label className="block text-gray-700 font-medium mb-2">
+      <label className="block text-gray-900 font-medium mb-2">
         Service Name
       </label>
       <input
@@ -261,7 +261,7 @@ const ServiceForm = ({ formData, handleChange }) => (
     </div>
 
     <div className="mb-4">
-      <label className="block text-gray-700 font-medium mb-2">
+      <label className="block text-gray-900 font-medium mb-2">
         Category
       </label>
       <select

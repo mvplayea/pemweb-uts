@@ -113,7 +113,7 @@ export default function OutletMenu() {
         <h1 className="text-2xl font-bold text-gray-800">Outlet Management</h1>
         <button
           onClick={openAddModal}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-blue-900"
         >
           Add New Outlet
         </button>
@@ -128,9 +128,9 @@ export default function OutletMenu() {
           <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Address</th>
-                <th className="px-6 py-3 text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Address</th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -138,7 +138,7 @@ export default function OutletMenu() {
                 <tr key={outlet.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{outlet.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary-100 text-blue-800">
                       {outlet.address}
                     </span>
                   </td>
@@ -146,13 +146,13 @@ export default function OutletMenu() {
                     <div className="flex space-x-2">
                       <button
                         onClick={() => openEditModal(outlet)}
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-indigo-500 hover:text-indigo-900"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => openDeleteModal(outlet)}
-                        className="text-red-600 hover:text-red-900"
+                        className="text-red-500 hover:text-red-900"
                       >
                         Delete
                       </button>
@@ -181,7 +181,7 @@ export default function OutletMenu() {
           </button>
           <button
             onClick={handleAddOutlet}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-blue-900"
           >
             Add Outlet
           </button>
@@ -204,7 +204,7 @@ export default function OutletMenu() {
           </button>
           <button
             onClick={handleUpdateOutlet}
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900"
           >
             Update Outlet
           </button>
@@ -218,7 +218,7 @@ export default function OutletMenu() {
         onClose={closeModals}
       >
         <div className="p-4">
-          <p className="text-gray-700">
+          <p className="text-gray-900">
             Are you sure you want to delete "{currentOutlet?.name}"? This action cannot be undone.
           </p>
         </div>
@@ -231,7 +231,7 @@ export default function OutletMenu() {
           </button>
           <button
             onClick={handleDeleteOutlet}
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-900"
           >
             Delete
           </button>
@@ -244,7 +244,7 @@ export default function OutletMenu() {
 const OutletForm = ({ formData, handleChange }) => (
   <div>
     <div className="mb-4">
-      <label className="block text-gray-700 font-medium mb-2">
+      <label className="block text-gray-900 font-medium mb-2">
         Outlet Name
       </label>
       <input
@@ -258,7 +258,7 @@ const OutletForm = ({ formData, handleChange }) => (
     </div>
 
     <div className="mb-4">
-      <label className="block text-gray-700 font-medium mb-2">
+      <label className="block text-gray-900 font-medium mb-2">
         Address
       </label>
       <input

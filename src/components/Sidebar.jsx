@@ -7,6 +7,10 @@ const Sidebar = ({ title = "Dashboard" }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!localStorage.getItem("username")) {
+      navigate("/");
+    }
+
     const storedRole = localStorage.getItem("role");
     setRole(storedRole);
   }, []);
@@ -23,22 +27,27 @@ const Sidebar = ({ title = "Dashboard" }) => {
     sidebarItems.push(
       {
         text: "Dashboard",
+        icon: <img src="/bubble.png" width={32} />,
         onClick: () => navigate("/dashboard"),
       },
       {
         text: "Transactions",
+        icon: <img src="/bubble2.png" width={32} />,
         onClick: () => navigate("/dashboard/transactions"),
       },
       {
         text: "Service",
+        icon: <img src="/produk.png" width={32} />,
         onClick: () => navigate("/dashboard/services"),
       },
       {
-        text: "Customers",
-        onClick: () => navigate("/dashboard/customers"),
+        text: "Users",
+        icon: <img src="/pengguna.png" width={32} />,
+        onClick: () => navigate("/dashboard/users"),
       },
       {
         text: "Outlets",
+        icon: <img src="/outlet.png" width={32} />,
         onClick: () => navigate("/dashboard/outlets"),
       }
     );
@@ -64,7 +73,7 @@ const Sidebar = ({ title = "Dashboard" }) => {
 
   return (
     <div className="flex w-full flex-start">
-      <div className={`h-screen bg-gray-800 text-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}>
+      <div className={`h-screen bg-primary-900 text-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}>
         <div className="flex justify-end p-4">
           <button onClick={() => setCollapsed(!collapsed)} className="text-gray-400 hover:text-white">
             {collapsed ? "→" : "←"}
@@ -96,7 +105,7 @@ const Sidebar = ({ title = "Dashboard" }) => {
 const SidebarItem = ({ text, icon, onClick }) => {
   return (
     <div
-      className={`flex items-center py-2 px-2 rounded-md mb-1 cursor-pointer hover:bg-gray-700`}
+      className={`flex items-center py-2 px-2 rounded-md mb-1 cursor-pointer hover:bg-primary-500`}
       onClick={onClick}
     >
       <div className="mr-3">{icon}</div>
