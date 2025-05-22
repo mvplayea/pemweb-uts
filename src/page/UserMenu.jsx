@@ -13,6 +13,33 @@ export default function UserMenu() {
     email: '',
     roles: '',
   });
+  
+  const defaultUser = [
+    {
+      id: 1,
+      roles: 'admin',
+      email: 'admin@wowo.com',
+      username: 'admin',
+      password: 'admin123',
+      name: 'Admin Budi',
+    },
+    {
+      id: 2,
+      roles: 'owner',
+      email: 'owner@wowo.com',
+      username: 'owner',
+      password: 'owner123',
+      name: 'Bagas',
+    },
+    {
+      id: 3,
+      roles: 'kasir',
+      email: 'kasir@wowo.com',
+      username: 'kasir',
+      password: 'kasir123',
+      name: 'Hawari',
+    },
+  ]
 
   useEffect(() => {
     const storedUsers = localStorage.getItem('users');
@@ -24,6 +51,8 @@ export default function UserMenu() {
   useEffect(() => {
     if (users.length > 0) {
       localStorage.setItem('users', JSON.stringify(users));
+    } else {
+      localStorage.setItem('users', JSON.stringify(defaultUser));
     }
   }, [users]);
 

@@ -16,14 +16,14 @@ export default function LoginPage() {
     // Hardcode the role
     let role;
 
-    switch (username) {
-      case "admin":
+    switch (username.toLowerCase()) {
+      case ("admin" || "admin@wowo.com"):
         role = "admin";
         break;
-      case "kasir":
+      case ("kasir" || "kasir@wowo.com"):
         role = "kasir";
         break;
-      case "owner":
+      case ("owner" || "owner.wowo.com"):
         role = "owner";
         break;
     }
