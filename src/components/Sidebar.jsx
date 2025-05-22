@@ -11,13 +11,13 @@ const Sidebar = ({ title = "Dashboard" }) => {
       navigate("/");
     }
 
-    const storedRole = localStorage.getItem("role");
+    const storedRole = localStorage.getItem("roles");
     setRole(storedRole);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("username");
-    localStorage.removeItem("role");
+    localStorage.removeItem("roles");
     navigate("/");
   };
 

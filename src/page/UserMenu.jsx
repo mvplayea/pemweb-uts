@@ -43,18 +43,11 @@ export default function UserMenu() {
 
   useEffect(() => {
     const storedUsers = localStorage.getItem('users');
+    
     if (storedUsers) {
       setUsers(JSON.parse(storedUsers));
     }
   }, []);
-
-  useEffect(() => {
-    if (users.length > 0) {
-      localStorage.setItem('users', JSON.stringify(users));
-    } else {
-      localStorage.setItem('users', JSON.stringify(defaultUser));
-    }
-  }, [users]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -104,7 +97,16 @@ export default function UserMenu() {
       email: formData.email,
       username: formData.username,
       roles: formData.roles,
+      password: formData.username,
     };
+    
+    // update to local storage
+    const storedUsers = localStorage.getItem('users');
+    if (storedUsers) {
+      const parsedUsers = JSON.parse(storedUsers);
+      setUsers([...parsedUsers, newUser]);
+      localStorage.setItem('users', JSON.stringify([...parsedUsers, newUser]));
+    }
 
     setUsers([...users, newUser]);
     closeModals();
