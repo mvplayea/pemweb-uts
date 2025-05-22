@@ -32,7 +32,7 @@ const Sidebar = ({ title = "Dashboard" }) => {
       },
       {
         text: "Transactions",
-        icon: <img src="/bubble2.png" width={32} />,
+        icon: <img src="/foam1.png" width={32} />,
         onClick: () => navigate("/dashboard/transactions"),
       },
       {
@@ -59,38 +59,50 @@ const Sidebar = ({ title = "Dashboard" }) => {
       },
       {
         text: "Transasctions",
-        onClick: () => navigate("/transactions"),
+        onClick: () => navigate("/dashboard/transactions"),
       }
     );
   } else if (role === "owner") {
-    sidebarItems.push(
-      {
-        text: "Dashboard",
-        onClick: () => navigate("/dashboard"),
-      },
-    );
+    sidebarItems.push({
+      text: "Dashboard",
+      onClick: () => navigate("/dashboard"),
+    });
   }
 
   return (
     <div className="flex w-full flex-start">
-      <div className={`h-screen bg-primary-900 text-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}>
+      <div
+        className={`h-screen bg-primary-900 text-white transition-all duration-300 ${
+          collapsed ? "w-16" : "w-64"
+        }`}
+      >
         <div className="flex justify-end p-4">
-          <button onClick={() => setCollapsed(!collapsed)} className="text-gray-400 hover:text-white">
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="text-gray-400 hover:text-white"
+          >
             {collapsed ? "→" : "←"}
           </button>
         </div>
 
-        {!collapsed && <div className="mb-8 px-4 font-bold text-xl">{title}</div>}
+        {!collapsed && (
+          <div className="mb-8 px-4 font-bold text-xl">{title}</div>
+        )}
 
         <div className="px-4">
           {sidebarItems.map((item, index) => (
-            <SidebarItem key={index} text={item.text} icon={item.icon} onClick={item.onClick} />
+            <SidebarItem
+              key={index}
+              text={item.text}
+              icon={item.icon}
+              onClick={item.onClick}
+            />
           ))}
         </div>
 
         <button
           onClick={handleLogout}
-          className="absolute bottom-4 left-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          className="absolute bottom-4 left-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         >
           Logout
         </button>
