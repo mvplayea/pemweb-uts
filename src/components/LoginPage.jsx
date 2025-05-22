@@ -12,22 +12,21 @@ export default function LoginPage() {
     const formData = new FormData(event.target);
     const username = formData.get("username");
     const password = formData.get("password");
-    
+
     // find from local storage
     const storedUsers = JSON.parse(localStorage.getItem("users"));
-    
-// Check if the username and password match any stored user
+
+    // Check if the username and password match any stored user
     const user = storedUsers.find(
       (user) => user.username === username && user.password === password
     );
-    
-    console.log(user)
-    
+
+    console.log(user);
+
     if (!user) {
       alert("Invalid username or password");
       return;
     }
-    
     // Store data in localStorage
     localStorage.setItem("username", user.username);
     localStorage.setItem("roles", user.roles);
@@ -45,13 +44,18 @@ export default function LoginPage() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-primary-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-80">
+    <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="bg-neutral-800 p-8 rounded-lg shadow-md w-80">
         <img src="/wowo.png" alt="Logo" className="w-48 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+        <h2 className="text-2xl font-bold text-center text-blue-200 mb-6">
+          Login
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-600 text-sm font-medium mb-2">
+            <label
+              htmlFor="username"
+              className="block text-blue-200 text-sm font-medium mb-2"
+            >
               Username
             </label>
             <input
@@ -63,7 +67,10 @@ export default function LoginPage() {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-600 text-sm font-medium mb-2">
+            <label
+              htmlFor="password"
+              className="block text-blue-200 text-sm font-medium mb-2"
+            >
               Password
             </label>
             <input
@@ -76,15 +83,10 @@ export default function LoginPage() {
           </div>
           <button
             type="submit"
-            className="w-full bg-primary-900 hover:bg-primary-500 hover:text-primary-900 text-primary-500 font-medium py-2 px-4 rounded-md transition duration-300"
+            className="w-full bg-primary-900 hover:bg-primary-500 hover:text-primary-900 text-primary-100 font-medium py-2 px-4 rounded-md transition duration-300"
           >
             Login
           </button>
-          <div className="text-center text-sm mt-4">
-            <a href="#" className="text-primary-500 hover:underline">Forgot Password?</a>
-            <span className="mx-2 text-gray-500">|</span>
-            <a href="#" className="text-primary-500 hover:underline">Register</a>
-          </div>
         </form>
       </div>
     </div>

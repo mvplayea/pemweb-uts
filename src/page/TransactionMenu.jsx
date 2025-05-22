@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import Modal from '../components/commons/Modal';
+import { useState, useEffect } from "react";
+import Modal from "../components/commons/Modal";
 
 export default function TransactionMenu() {
   const [transactions, setTransactions] = useState([]);
@@ -8,17 +8,17 @@ export default function TransactionMenu() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState(null);
   const [formData, setFormData] = useState({
-    service: '',
-    customer: '',
-    user: '',
-    outlet: '',
+    service: "",
+    customer: "",
+    user: "",
+    outlet: "",
     price: 0,
     weight: 0,
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split("T")[0],
   });
 
   useEffect(() => {
-    const storedTransactions = localStorage.getItem('transactions');
+    const storedTransactions = localStorage.getItem("transactions");
     if (storedTransactions) {
       setTransactions(JSON.parse(storedTransactions));
     }
@@ -26,7 +26,7 @@ export default function TransactionMenu() {
 
   useEffect(() => {
     if (transactions.length !== 0) {
-      localStorage.setItem('transactions', JSON.stringify(transactions));
+      localStorage.setItem("transactions", JSON.stringify(transactions));
     }
   }, [transactions]);
 
@@ -35,12 +35,19 @@ export default function TransactionMenu() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const openAddModal = () => {
-    setFormData({ name: '', price: 0, outlet: '', customer: '', date: new Date().toISOString().split('T')[0], weight: 0 });
+    setFormData({
+      name: "",
+      price: 0,
+      outlet: "",
+      customer: "",
+      date: new Date().toISOString().split("T")[0],
+      weight: 0,
+    });
     setIsAddModalOpen(true);
   };
 
@@ -71,7 +78,7 @@ export default function TransactionMenu() {
   const handleAddTransaction = () => {
     // Basic validation
     if (!formData.outlet || !formData.customer || !formData.service) {
-      alert('Please fill in all fields');
+      alert("Please fill in all fields");
       return;
     }
 
@@ -83,7 +90,7 @@ export default function TransactionMenu() {
       price: formData.price,
       weight: formData.weight,
       date: formData.date,
-      user: localStorage.getItem('username'),
+      user: localStorage.getItem("username"),
     };
 
     setTransactions([...transactions, newTransaction]);
@@ -93,12 +100,18 @@ export default function TransactionMenu() {
   const handleUpdateTransaction = () => {
     // Basic validation
     console.log(formData);
-    if (!formData.price || !formData.outlet || !formData.customer || !formData.date || !formData.weight) {
-      alert('Please fill in all fields');
+    if (
+      !formData.price ||
+      !formData.outlet ||
+      !formData.customer ||
+      !formData.date ||
+      !formData.weight
+    ) {
+      alert("Please fill in all fields");
       return;
     }
 
-    const updatedTransactions = transactions.map(transaction => {
+    const updatedTransactions = transactions.map((transaction) => {
       if (transaction.id === currentTransaction.id) {
         return {
           ...transaction,
@@ -107,7 +120,7 @@ export default function TransactionMenu() {
           outlet: formData.outlet,
           customer: formData.customer,
           date: formData.date,
-          user: localStorage.getItem('username'),
+          user: localStorage.getItem("username"),
         };
       }
       return transaction;
@@ -119,9 +132,9 @@ export default function TransactionMenu() {
 
   const handleDeleteTransaction = () => {
     const updatedTransactions = transactions.filter(
-      transaction => transaction.id !== currentTransaction.id
+      (transaction) => transaction.id !== currentTransaction.id
     );
-    localStorage.setItem('transactions', JSON.stringify(updatedTransactions));
+    localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
     setTransactions(updatedTransactions);
     closeModals();
   };
@@ -130,7 +143,9 @@ export default function TransactionMenu() {
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Transaction Management</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          Transaction Management
+        </h1>
         <button
           onClick={openAddModal}
           className="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-blue-900"
@@ -141,37 +156,65 @@ export default function TransactionMenu() {
 
       {transactions.length === 0 ? (
         <div className="text-center p-8 bg-gray-50 rounded-lg">
-          <p className="text-gray-500">No transactions available. Add a new transaction to get started.</p>
+          <p className="text-gray-500">
+            No transactions available. Add a new transaction to get started.
+          </p>
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">User</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Weight</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Service</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Outlet</th>
-                <th className="px-6 py-3 text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  User
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Customer
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Price
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Weight
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Service
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Date
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Outlet
+                </th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {transactions.map((transaction) => (
                 <tr key={transaction.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.user}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.customer}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {transaction.user}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {transaction.customer}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {new Intl.NumberFormat("id-ID", {
                       style: "currency",
                       currency: "IDR",
                     }).format(transaction.price)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.weight}KG</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.service}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.date}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {transaction.weight}KG
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {transaction.service}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {transaction.date}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary-100 text-blue-800">
                       {transaction.outlet}
@@ -254,7 +297,8 @@ export default function TransactionMenu() {
       >
         <div className="p-4">
           <p className="text-gray-900">
-            Are you sure you want to delete "{currentTransaction?.name}"? This action cannot be undone.
+            Are you sure you want to delete "{currentTransaction?.name}"? This
+            action cannot be undone.
           </p>
         </div>
         <div className="flex justify-end mt-6 space-x-2">
@@ -281,8 +325,8 @@ const TransactionForm = ({ formData, handleChange }) => {
   const [outlets, setOutlets] = useState([]);
 
   useEffect(() => {
-    const storedServices = localStorage.getItem('services');
-    const storedOutlets = localStorage.getItem('outlets');
+    const storedServices = localStorage.getItem("services");
+    const storedOutlets = localStorage.getItem("outlets");
 
     if (storedServices) {
       setServices(JSON.parse(storedServices));
@@ -295,9 +339,7 @@ const TransactionForm = ({ formData, handleChange }) => {
   return (
     <div>
       <div className="mb-4">
-        <label className="block text-gray-900 font-medium mb-2">
-          Outlet
-        </label>
+        <label className="block text-gray-900 font-medium mb-2">Outlet</label>
         <select
           name="outlet"
           value={formData.outlet}
@@ -314,9 +356,7 @@ const TransactionForm = ({ formData, handleChange }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-900 font-medium mb-2">
-          Customer
-        </label>
+        <label className="block text-gray-900 font-medium mb-2">Customer</label>
         <input
           type="text"
           name="customer"
@@ -328,9 +368,7 @@ const TransactionForm = ({ formData, handleChange }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-900 font-medium mb-2">
-          Service
-        </label>
+        <label className="block text-gray-900 font-medium mb-2">Service</label>
         <select
           name="service"
           value={formData.service}
@@ -347,9 +385,7 @@ const TransactionForm = ({ formData, handleChange }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-900 font-medium mb-2">
-          Date
-        </label>
+        <label className="block text-gray-900 font-medium mb-2">Date</label>
         <input
           type="date"
           name="date"
@@ -362,7 +398,7 @@ const TransactionForm = ({ formData, handleChange }) => {
 
       <div className="mb-4">
         <label className="block text-gray-900 font-medium mb-2">
-          Berat (kg)
+          Weight (kg)
         </label>
         <input
           type="number"
@@ -392,5 +428,5 @@ const TransactionForm = ({ formData, handleChange }) => {
         />
       </div>
     </div>
-  )
+  );
 };
