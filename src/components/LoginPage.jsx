@@ -13,24 +13,23 @@ export default function LoginPage() {
     const username = formData.get("username");
     const password = formData.get("password");
 
-    // Hardcode the role
-    let role;
+    // find from local storage
+    const storedUsers = JSON.parse(localStorage.getItem("users"));
 
-    switch (username) {
-      case "admin":
-        role = "admin";
-        break;
-      case "kasir":
-        role = "kasir";
-        break;
-      case "owner":
-        role = "owner";
-        break;
+    // Check if the username and password match any stored user
+    const user = storedUsers.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    console.log(user);
+
+    if (!user) {
+      alert("Invalid username or password");
+      return;
     }
-
     // Store data in localStorage
-    localStorage.setItem("username", username);
-    localStorage.setItem("role", role);
+    localStorage.setItem("username", user.username);
+    localStorage.setItem("roles", user.roles);
 
     // Redirect to dashboard
     navigate("/dashboard");

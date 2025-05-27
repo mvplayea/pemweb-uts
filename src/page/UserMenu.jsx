@@ -13,19 +13,41 @@ export default function UserMenu() {
     email: '',
     roles: '',
   });
+  
+  const defaultUser = [
+    {
+      id: 1,
+      roles: 'admin',
+      email: 'admin@wowo.com',
+      username: 'admin',
+      password: 'admin123',
+      name: 'Admin Budi',
+    },
+    {
+      id: 2,
+      roles: 'owner',
+      email: 'owner@wowo.com',
+      username: 'owner',
+      password: 'owner123',
+      name: 'Bagas',
+    },
+    {
+      id: 3,
+      roles: 'kasir',
+      email: 'kasir@wowo.com',
+      username: 'kasir',
+      password: 'kasir123',
+      name: 'Hawari',
+    },
+  ]
 
   useEffect(() => {
     const storedUsers = localStorage.getItem('users');
+    
     if (storedUsers) {
       setUsers(JSON.parse(storedUsers));
     }
   }, []);
-
-  useEffect(() => {
-    if (users.length > 0) {
-      localStorage.setItem('users', JSON.stringify(users));
-    }
-  }, [users]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,7 +97,16 @@ export default function UserMenu() {
       email: formData.email,
       username: formData.username,
       roles: formData.roles,
+      password: formData.username,
     };
+    
+    // update to local storage
+    const storedUsers = localStorage.getItem('users');
+    if (storedUsers) {
+      const parsedUsers = JSON.parse(storedUsers);
+      setUsers([...parsedUsers, newUser]);
+      localStorage.setItem('users', JSON.stringify([...parsedUsers, newUser]));
+    }
 
     setUsers([...users, newUser]);
     closeModals();
