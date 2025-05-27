@@ -55,16 +55,19 @@ const Sidebar = ({ title = "Dashboard" }) => {
     sidebarItems.push(
       {
         text: "Dashboard",
+        icon: <img src="/bubble.png" width={32} />,
         onClick: () => navigate("/dashboard"),
       },
       {
         text: "Transasctions",
+        icon: <img src="/foam1.png" width={32} />,
         onClick: () => navigate("/dashboard/transactions"),
       }
     );
   } else if (role === "owner") {
     sidebarItems.push({
       text: "Dashboard",
+      icon: <img src="/bubble.png" width={32} />,
       onClick: () => navigate("/dashboard"),
     });
   }
@@ -72,14 +75,14 @@ const Sidebar = ({ title = "Dashboard" }) => {
   return (
     <div className="flex w-full flex-start">
       <div
-        className={`h-screen bg-primary-900 text-white transition-all duration-300 ${
+        className={`h-screen bg-blue-950 text-white transition-all duration-300 ${
           collapsed ? "w-16" : "w-64"
         }`}
       >
         <div className="flex justify-end p-4">
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="text-gray-400 hover:text-white"
+            className="text-white hover:text-primary-900"
           >
             {collapsed ? "→" : "←"}
           </button>
@@ -102,7 +105,7 @@ const Sidebar = ({ title = "Dashboard" }) => {
 
         <button
           onClick={handleLogout}
-          className="absolute bottom-4 left-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          className="absolute bottom-4 left-4 bg-red-800 hover:bg-red-950 text-white font-bold py-2 px-4 rounded"
         >
           Logout
         </button>
@@ -117,7 +120,7 @@ const Sidebar = ({ title = "Dashboard" }) => {
 const SidebarItem = ({ text, icon, onClick }) => {
   return (
     <div
-      className={`flex items-center py-2 px-2 rounded-md mb-1 cursor-pointer hover:bg-primary-500`}
+      className={`flex items-center py-2 px-2 rounded-md mb-1 cursor-pointer hover:bg-primary-900`}
       onClick={onClick}
     >
       <div className="mr-3">{icon}</div>

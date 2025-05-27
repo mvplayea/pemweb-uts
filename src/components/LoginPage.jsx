@@ -45,17 +45,17 @@ export default function LoginPage() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
-      <div className="bg-neutral-800 p-8 rounded-lg shadow-md w-80">
+    <div className="min-h-screen flex items-center justify-center bg-blue-950">
+      <div className="bg-blue-100 p-8 rounded-lg shadow-md w-80">
         <img src="/wowo.png" alt="Logo" className="w-48 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-center text-blue-200 mb-6">
-          Login
+        <h2 className="text-2xl font-bold text-center text-blue-950 mb-6">
+          WONDRY
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="username"
-              className="block text-blue-200 text-sm font-medium mb-2"
+              className="block text-blue-950 text-sm font-medium mb-2"
             >
               Username
             </label>
@@ -64,13 +64,13 @@ export default function LoginPage() {
               id="username"
               name="username"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-900 text-blue-950"
             />
           </div>
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-blue-200 text-sm font-medium mb-2"
+              className="block text-blue-950 text-sm font-medium mb-2"
             >
               Password
             </label>
@@ -79,12 +79,12 @@ export default function LoginPage() {
               id="password"
               name="password"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-900 text-blue-950"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-primary-900 hover:bg-primary-500 hover:text-primary-900 text-primary-100 font-medium py-2 px-4 rounded-md transition duration-300"
+            className="w-full bg-primary-900 hover:bg-blue-950 hover:text-primary-900 text-primary-100 font-medium py-2 px-4 rounded-md transition duration-300"
           >
             Login
           </button>
